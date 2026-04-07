@@ -240,8 +240,10 @@ export class Profiler {
         ? profileResults.stats?.timings?.proving
         : undefined;
 
-      // Send the tx (this proves again internally).
-      await f.action.send({ from: origin, additionalScopes, fee: feeOpts });
+      // Send the tx (proves again internally). Skip when --skip-proving is set.
+      if (!this.#skipProving) {
+        await f.action.send({ from: origin, additionalScopes, fee: feeOpts });
+      }
 
       const result: ProfileResult = {
         name,
@@ -296,8 +298,10 @@ export class Profiler {
         ? profileResults.stats?.timings?.proving
         : undefined;
 
-      // 3. Send — action manages its own options
-      await item.action.send();
+      // 3. Send — action manages its own options. Skip when --skip-proving is set.
+      if (!this.#skipProving) {
+        await item.action.send();
+      }
 
       const result: ProfileResult = {
         name,

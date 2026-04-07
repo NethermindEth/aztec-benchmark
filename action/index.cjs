@@ -39,8 +39,8 @@ async function run() {
     core.info(`Only report: ${onlyReport}`);
     core.info(`Circuit details: ${circuitDetails}`);
 
-    if (isNaN(threshold)) {
-      throw new Error('Invalid threshold value. Please provide a number.');
+    if (typeof threshold === 'number' && isNaN(threshold)) {
+      throw new Error('Invalid threshold value. Please provide a number or a JSON thresholds object.');
     }
 
     if (!onlyReport) {

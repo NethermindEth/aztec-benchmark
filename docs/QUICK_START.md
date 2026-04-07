@@ -214,6 +214,8 @@ export default class MyBenchmark extends Benchmark {
 
 Region results appear in the JSON report under `regions` and `regionSummaries`, and in PR comments as a collapsible breakdown section.
 
+**Noop delimiter:** The package ships a minimal Noop contract at `contracts/noop/` for use as a trace boundary. Deploy it alongside your contract and use `endMatch: 'Noop:'` to slice the trace. The contract has both `noop()` (private) and `noop_pub()` (public) functions.
+
 ## Advanced: Custom Transaction Flows
 
 For contracts that must be the transaction root (bypassing the account entrypoint), use raw interactions:

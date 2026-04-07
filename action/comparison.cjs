@@ -74,8 +74,9 @@ const formatDiff = (main, pr) => {
  * @returns {object} Normalized thresholds: { gates, daGas, l2Gas, provingTime }.
  */
 function normalizeThresholds(threshold) {
-  if (typeof threshold === 'number') {
-    return { gates: threshold, daGas: threshold, l2Gas: threshold, provingTime: null };
+  if (threshold == null || typeof threshold === 'number') {
+    const t = typeof threshold === 'number' ? threshold : 2.5;
+    return { gates: t, daGas: t, l2Gas: t, provingTime: null };
   }
   return {
     gates: threshold.gates ?? 2.5,
@@ -110,11 +111,18 @@ const getStatusEmoji = (metrics, threshold) => {
   const l2GasDiffPct = metrics.l2Gas.main === 0 ? (metrics.l2Gas.pr > 0 ? Infinity : 0) :
                     (metrics.l2Gas.pr - metrics.l2Gas.main) / metrics.l2Gas.main;
 
+  // Compute provingTime diff if metrics include it
+  const ptMain = metrics.provingTime?.main ?? 0;
+  const ptPr = metrics.provingTime?.pr ?? 0;
+  const ptDiffPct = ptMain === 0 ? (ptPr > 0 ? Infinity : 0) :
+                    (ptPr - ptMain) / ptMain;
+
   // Build checks only for metrics that have a non-null threshold
   const checks = [];
   if (t.gates != null) checks.push({ diff: gateDiffPct, threshold: t.gates / 100.0 });
   if (t.daGas != null) checks.push({ diff: daGasDiffPct, threshold: t.daGas / 100.0 });
   if (t.l2Gas != null) checks.push({ diff: l2GasDiffPct, threshold: t.l2Gas / 100.0 });
+  if (t.provingTime != null) checks.push({ diff: ptDiffPct, threshold: t.provingTime / 100.0 });
 
   const finiteChecks = checks.filter(c => isFinite(c.diff));
   const hasInfiniteIncrease = checks.some(c => c.diff === Infinity);

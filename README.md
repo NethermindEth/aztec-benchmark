@@ -246,6 +246,8 @@ export default class FPCBenchmark extends Benchmark {
 | `endMatch` | `string \| string[]` | Contract name prefix(es) marking the end boundary (exclusive). Omit to include until end of trace |
 | `excludeKernels` | `boolean` | If `true`, filter out `private_kernel_*` and `hiding_kernel` circuits from the region |
 
+**Noop delimiter contract:** The package ships a minimal Noop contract at `contracts/noop/` for use as a trace delimiter. Deploy it alongside your contract and use its circuit name (`Noop:`) as the `endMatch` boundary. It includes both `noop()` (private) and `noop_pub()` (public) functions.
+
 The profiler also ships a **built-in kernel isolation preset** that auto-splits the trace into "app" (non-kernel) and "kernel" (overhead) regions:
 
 ```ts

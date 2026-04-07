@@ -53,7 +53,7 @@ export function extractRegion(steps: GateCount[], region: TraceRegion): GateCoun
   let endIdx = steps.length;
   if (region.endMatch) {
     const endPrefixes = toArray(region.endMatch);
-    for (let i = startIdx; i < steps.length; i++) {
+    for (let i = startIdx + 1; i < steps.length; i++) {
       if (matchesAny(steps[i].circuitName, endPrefixes)) {
         endIdx = i;
         break;
