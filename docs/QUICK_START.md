@@ -10,8 +10,26 @@ Get gate counts, gas estimates, and performance metrics for your Aztec contracts
 
 ## 1. Install
 
+Add as a git submodule and reference locally:
+
 ```sh
-yarn add --dev @defi-wonderland/aztec-benchmark
+git submodule add https://github.com/NethermindEth/aztec-benchmark.git vendor/aztec-benchmark
+```
+
+In your `package.json`:
+
+```json
+{
+  "dependencies": {
+    "@defi-wonderland/aztec-benchmark": "file:./vendor/aztec-benchmark"
+  }
+}
+```
+
+Then:
+
+```sh
+yarn install
 ```
 
 ## 2. Configure

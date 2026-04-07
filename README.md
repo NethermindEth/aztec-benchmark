@@ -28,11 +28,31 @@ Use the CLI to execute benchmark files written in TypeScript. For CI integration
 
 ## Installation
 
+### From npm (upstream)
+
 ```sh
 yarn add --dev @defi-wonderland/aztec-benchmark
-# or
-npm install --save-dev @defi-wonderland/aztec-benchmark
 ```
+
+### From git (this fork, recommended)
+
+Add as a git submodule in your project:
+
+```sh
+git submodule add https://github.com/NethermindEth/aztec-benchmark.git vendor/aztec-benchmark
+```
+
+Then reference it as a local dependency in your `package.json`:
+
+```json
+{
+  "dependencies": {
+    "@defi-wonderland/aztec-benchmark": "file:./vendor/aztec-benchmark"
+  }
+}
+```
+
+Run `yarn install` to link it. The CLI will be available as `npx aztec-benchmark`.
 
 ---
 
